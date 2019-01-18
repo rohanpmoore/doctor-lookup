@@ -36,11 +36,18 @@ $(document).ready(function() {
 
   function displayData(response) {
     let body = JSON.parse(response);
+    console.log(body.data.length);
     if(body.data.length < 1) {
       $("#error").text(`I'm sorry, there are no doctors in your area matching your search query.`)
     } else {
       body.data.forEach(function(data){
-        $("#doctorList").append(`<li>${data.practices[0].name}, ${data.practices[0].visit_address.street}</li>`)
+        let dataString = `<li>${data.profile.first_name} ${data.profile.last_name}, ${data.practices[0].visit_address.street}, ${data.practices[0].phones[0].number}, `;
+        if(data.practices[0].accepts_new_patients) {
+          dataString += `accepting new patients</li>`;
+        } else {
+          dataString += `not accepting new patients</li>`;
+        }
+        $("#doctorList").append(dataString);
       });
     }
   }
