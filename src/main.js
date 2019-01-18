@@ -18,8 +18,9 @@ $(document).ready(function() {
     let promise = doctor.findForIssue($("#malady").val());
     promise.then(function(response) {
       let body = JSON.parse(response);
+      console.log(body);
       body.data.forEach(function(data){
-        $("#doctorList").append(`<li>${data.practices.name}, ${data.practices.visit_address.street}</li>`)
+        $("#doctorList").append(`<li>${data.practices[0].name}, ${data.practices[0].visit_address.street}</li>`)
       });
     }, function(error) {
       $("#error").text(`${error.message}`)
